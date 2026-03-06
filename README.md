@@ -1,10 +1,12 @@
 <div align="center">
 
-# 🎯 MockOffer
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="public/logo.svg">
+  <source media="(prefers-color-scheme: light)" srcset="public/logo.svg">
+  <img src="public/logo.svg" alt="MockOffer Logo" width="400"/>
+</picture>
 
-![MockOffer](https://img.shields.io/badge/MockOffer-AI%20Interview%20Platform-D4AF37?style=for-the-badge&logo=openai&logoColor=white)
-
-### AI-Powered Mock Coding Interview Platform
+<br/>
 
 **Practice coding interviews with personalized questions from top tech companies and get instant AI feedback on your solutions.**
 
