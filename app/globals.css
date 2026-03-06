@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* Luxury Noir Color Palette */
+:root {
+  /* Primary Colors */
+  --background: #1a1a1a;           /* Professional Dark Grey */
+  --surface: #2d2d2d;              /* Elevated sections/cards */
+  --accent: #D4AF37;               /* Gold accent */
+  --text-high: #F5F5F5;            /* Off-white for headings */
+  --text-muted: #A0A0A0;           /* Subtitles/secondary text */
+  
+  /* Legacy variables for compatibility */
+  --foreground: var(--text-high);
+  --card: var(--surface);
+  --card-foreground: var(--text-high);
+  --primary: var(--accent);
+  --primary-foreground: var(--background);
+  --secondary: #2A2A2A;
+  --secondary-foreground: var(--text-high);
+  --muted: #1A1A1A;
+  --muted-foreground: var(--text-muted);
+  --accent-foreground: var(--background);
+  --border: #333333;
+  --input: var(--surface);
+  --ring: var(--accent);
+  
+  /* Typography - Neue Haas Grotesk Style */
+  --font-heading: var(--font-neue-haas);
+  --font-body: var(--font-neue-haas);
+}
+
+/* Base Styling */
+.luxury-noir-theme {
+  background: var(--background);
+  color: var(--text-high);
+  font-family: var(--font-body);
+  letter-spacing: 0.02em; /* Enhanced readability for dark mode */
+}
+
+/* Typography Classes */
+.heading {
+  font-family: var(--font-heading);
+  color: var(--text-high);
+  font-weight: 600;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Professional Button Styles with Neon Effects */
+.btn-luxury {
+  background: var(--accent);
+  color: var(--background);
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 10px rgba(212, 175, 55, 0.3),
+    0 0 20px rgba(212, 175, 55, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-luxury:hover {
+  background: #C19B26;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.6),
+    0 0 40px rgba(212, 175, 55, 0.3),
+    0 8px 25px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-luxury:hover::before {
+  left: 100%;
+}
+
+.btn-luxury:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 0 15px rgba(212, 175, 55, 0.4),
+    0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-luxury-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  font-family: var(--font-body);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 10px rgba(212, 175, 55, 0.2),
+    inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.btn-luxury-outline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.btn-luxury-outline:hover {
+  background: var(--accent);
+  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 25px rgba(212, 175, 55, 0.5),
+    0 0 50px rgba(212, 175, 55, 0.2),
+    0 8px 25px rgba(212, 175, 55, 0.2);
+  border-color: #E6C547;
+}
+
+.btn-luxury-outline:hover::before {
+  left: 100%;
+}
+
+/* Card Styling with Neon Glow Effects */
+.card-luxury {
+  background: var(--surface);
+  border: 1px solid #2A2A2A;
+  border-radius: 0.75rem;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(212, 175, 55, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-luxury::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(212, 175, 55, 0.03),
+    transparent,
+    rgba(212, 175, 55, 0.03),
+    transparent
+  );
+  animation: neonPulse 8s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-luxury:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 2px 10px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(212, 175, 55, 0.3),
+    0 0 40px rgba(212, 175, 55, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 20px rgba(212, 175, 55, 0.05);
+  transform: translateY(-2px);
+}
+
+.card-luxury:hover::before {
+  opacity: 1;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Enhanced Input Styling */
+.input-luxury {
+  background: var(--surface);
+  border: 2px solid #333333;
+  color: var(--text-high);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+}
+
+.input-luxury:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.input-luxury::placeholder {
+  color: var(--text-muted);
+}
+
+/* Navigation Enhancement */
+.nav-luxury {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* Code Editor Dark Enhancement */
+.monaco-editor-luxury {
+  border: 1px solid #2A2A2A;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Global Border Color Override */
+* {
+  border-color: #333333;
+}
+
+/* Scrollbar Styling for Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Selection Styling */
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: var(--text-high);
+}
+
+/* Logo hover effects */
+.logo-container:hover svg {
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
