@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="public/logo.svg">
-  <source media="(prefers-color-scheme: light)" srcset="public/logo.svg">
-  <img src="public/logo.svg" alt="MockOffer Logo" width="400"/>
+  <source media="(prefers-color-scheme: dark)" srcset="public/logo.png">
+  <source media="(prefers-color-scheme: light)" srcset="public/logo.png">
+  <img src="public/logo.png" alt="MockOffer Logo" width="400"/>
 </picture>
 
 <br/>
