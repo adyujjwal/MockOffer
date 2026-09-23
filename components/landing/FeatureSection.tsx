@@ -27,38 +27,56 @@ const DEV_TOOLS = [
     tint: "rgba(230,178,74,0.1)",
     color: "var(--color-gold-bright)",
     title: "Run against examples",
-    body:
-      "Write only the function. We build the test driver for you, run it on every example across eight languages, and show real pass / fail — genuine execution, not a simulation.",
+    body: "Write only the function. We build the test driver, run it on every example across eight languages, and show real pass / fail: genuine execution, not a simulation.",
   },
   {
     icon: <Bulb size={20} />,
     tint: "rgba(138,162,255,0.1)",
     color: "#8aa2ff",
     title: "On-demand hints",
-    body:
-      "Stuck without giving up? Ask for progressive hints that nudge instead of spoiling: three levels, from a gentle push to a step-by-step approach.",
+    body: "Stuck without giving up? Ask for progressive hints that nudge instead of spoiling: three levels, from a gentle push to a step-by-step approach.",
   },
   {
     icon: <Doc size={20} />,
     tint: "rgba(88,201,139,0.1)",
     color: "#58c98b",
     title: "Autosaved drafts",
-    body:
-      "Your code is saved as you type, per problem and per language. Refresh the page or switch languages and your work is still exactly where you left it.",
+    body: "Your code is saved as you type, per problem and per language. Refresh the page or switch languages and your work is exactly where you left it.",
   },
   {
     icon: <Cog size={20} />,
     tint: "rgba(201,155,255,0.1)",
     color: "#c99bff",
     title: "Editor power tools",
-    body:
-      "Font size, word wrap, minimap, a distraction-free fullscreen mode, copy and download, plus a live status bar with cursor position and language.",
+    body: "Font size, word wrap, minimap, distraction-free fullscreen, copy and download, plus a live status bar with cursor position and language.",
   },
 ];
 
+/** Icon + title header shared by every feature card */
+const CardHeader: React.FC<{
+  icon: React.ReactNode;
+  tint: string;
+  color: string;
+  title: string;
+}> = ({ icon, tint, color, title }) => (
+  <div className="mb-4 flex flex-col items-center gap-3 lg:flex-row lg:items-center">
+    <span
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+      style={{ background: tint, color }}
+    >
+      {icon}
+    </span>
+    <h3 className="text-xl font-semibold">{title}</h3>
+  </div>
+);
+
 export const FeatureSection: React.FC = () => {
   return (
-    <section id="features" className="relative mx-auto max-w-6xl px-5 py-24 sm:py-32">
+    <section
+      id="features"
+      className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:py-32"
+    >
+      {/* ── Section heading ── */}
       <Reveal className="mx-auto max-w-2xl text-center">
         <span className="eyebrow">The system</span>
         <h2 className="mt-4 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -71,23 +89,22 @@ export const FeatureSection: React.FC = () => {
         </p>
       </Reveal>
 
-      <div className="mt-16 grid gap-4 lg:grid-cols-6">
-        {/* AI Interviewer (wide) */}
+      {/* ── Bento grid ── */}
+      <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-6">
+
+        {/* AI Interviewer — spans 4 cols on lg */}
         <Reveal className="lg:col-span-4">
-          <article className="card card-interactive card-glow h-full overflow-hidden p-7 text-center lg:text-left">
-            <div className="flex items-start justify-between gap-4">
-              <div className="w-full">
-                <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-                  <AIOrb size={40} status="evaluating" />
-                  <h3 className="text-xl font-semibold">AI interviewer</h3>
-                </div>
-                <p className="mx-auto max-w-md text-[color:var(--color-fg-muted)] lg:mx-0">
-                  An interviewer that evaluates more than your final answer. It follows your
-                  reasoning, questions your choices, and scores the whole performance.
-                </p>
-              </div>
+          <article className="card card-interactive card-glow flex h-full flex-col items-center overflow-hidden p-7 text-center lg:items-start lg:text-left">
+            {/* Custom header: AIOrb doesn't fit the icon-box pattern */}
+            <div className="mb-4 flex flex-col items-center gap-3 lg:flex-row lg:items-center">
+              <AIOrb size={40} status="evaluating" />
+              <h3 className="text-xl font-semibold">AI interviewer</h3>
             </div>
-            <div className="mt-6 grid gap-2 text-left sm:grid-cols-2">
+            <p className="max-w-md text-[color:var(--color-fg-muted)]">
+              An interviewer that evaluates more than your final answer. It follows your
+              reasoning, questions your choices, and scores the whole performance.
+            </p>
+            <div className="mt-6 grid w-full gap-2 sm:grid-cols-2">
               {EVAL_DIMENSIONS.map((d) => (
                 <div
                   key={d}
@@ -100,34 +117,40 @@ export const FeatureSection: React.FC = () => {
                   >
                     <Check size={13} strokeWidth={2.4} />
                   </span>
-                  <span className="text-[color:var(--color-fg-muted)]">{d}</span>
+                  <span className="text-left text-[color:var(--color-fg-muted)]">{d}</span>
                 </div>
               ))}
             </div>
           </article>
         </Reveal>
 
-        {/* Performance analysis (tall) */}
+        {/* Performance analysis — spans 2 cols on lg */}
         <Reveal className="lg:col-span-2" delay={80}>
-          <article className="card card-interactive card-glow h-full p-7 text-center lg:text-left">
-            <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: "rgba(138,162,255,0.1)", color: "#8aa2ff" }}>
-                <Gauge size={20} />
-              </span>
-              <h3 className="text-xl font-semibold">Performance analysis</h3>
-            </div>
+          <article className="card card-interactive card-glow flex h-full flex-col items-center p-7 text-center lg:items-start lg:text-left">
+            <CardHeader
+              icon={<Gauge size={20} />}
+              tint="rgba(138,162,255,0.1)"
+              color="#8aa2ff"
+              title="Performance analysis"
+            />
             <p className="text-sm text-[color:var(--color-fg-muted)]">
               Every submission is measured across the dimensions interviewers actually care about.
             </p>
-            <div className="mt-6 space-y-4 text-left">
+            <div className="mt-6 w-full space-y-4">
               {PERF_BARS.map((b) => (
                 <div key={b.label}>
                   <div className="mb-1.5 flex items-center justify-between text-xs">
                     <span className="text-[color:var(--color-fg-muted)]">{b.label}</span>
                     <span className="mono text-[color:var(--color-fg-subtle)]">{b.value}</span>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full" style={{ background: "var(--color-elevated)" }}>
-                    <div className="h-full rounded-full" style={{ width: `${b.value}%`, background: b.color }} />
+                  <div
+                    className="h-1.5 overflow-hidden rounded-full"
+                    style={{ background: "var(--color-elevated)" }}
+                  >
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${b.value}%`, background: b.color }}
+                    />
                   </div>
                 </div>
               ))}
@@ -135,28 +158,31 @@ export const FeatureSection: React.FC = () => {
           </article>
         </Reveal>
 
-        {/* Real coding environment */}
+        {/* Real coding environment — spans 3 cols on lg */}
         <Reveal className="lg:col-span-3" delay={40}>
-          <article className="card card-interactive card-glow h-full overflow-hidden p-7 text-center lg:text-left">
-            <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: "rgba(230,178,74,0.1)", color: "var(--color-gold-bright)" }}>
-                <Code size={20} />
-              </span>
-              <h3 className="text-xl font-semibold">Real coding environment</h3>
-            </div>
+          <article className="card card-interactive card-glow flex h-full flex-col items-center overflow-hidden p-7 text-center lg:items-start lg:text-left">
+            <CardHeader
+              icon={<Code size={20} />}
+              tint="rgba(230,178,74,0.1)"
+              color="var(--color-gold-bright)"
+              title="Real coding environment"
+            />
             <p className="text-sm text-[color:var(--color-fg-muted)]">
               The same Monaco editor that powers VS Code, with eight languages and syntax
               intelligence. No toy sandbox.
             </p>
             <div
-              className="mt-5 overflow-hidden rounded-lg border text-left font-mono text-[12px]"
+              className="mt-5 w-full overflow-hidden rounded-lg border font-mono text-[12px]"
               style={{ borderColor: "var(--color-line)", background: "var(--color-inset)" }}
             >
-              <div className="flex items-center gap-2 border-b px-3 py-2" style={{ borderColor: "var(--color-line)" }}>
+              <div
+                className="flex items-center gap-2 border-b px-3 py-2"
+                style={{ borderColor: "var(--color-line)" }}
+              >
                 <span className="badge diff-medium">Medium</span>
                 <span className="text-[11px] text-[color:var(--color-fg-subtle)]">solution.ts</span>
               </div>
-              <pre className="overflow-x-auto p-3 leading-relaxed">
+              <pre className="overflow-x-auto p-3 text-left leading-relaxed">
                 <code>
                   <span style={{ color: "#c99bff" }}>const</span>
                   <span style={{ color: "#f5f5f6" }}> merge</span>
@@ -174,20 +200,20 @@ export const FeatureSection: React.FC = () => {
           </article>
         </Reveal>
 
-        {/* Interview history */}
+        {/* Interview history — spans 3 cols on lg */}
         <Reveal className="lg:col-span-3" delay={120}>
-          <article className="card card-interactive card-glow h-full p-7 text-center lg:text-left">
-            <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: "rgba(88,201,139,0.1)", color: "#58c98b" }}>
-                <History size={20} />
-              </span>
-              <h3 className="text-xl font-semibold">Interview history</h3>
-            </div>
+          <article className="card card-interactive card-glow flex h-full flex-col items-center p-7 text-center lg:items-start lg:text-left">
+            <CardHeader
+              icon={<History size={20} />}
+              tint="rgba(88,201,139,0.1)"
+              color="#58c98b"
+              title="Interview history"
+            />
             <p className="text-sm text-[color:var(--color-fg-muted)]">
               Every session is saved with its code, feedback and timing, so you can watch your
               trend line move.
             </p>
-            <div className="mt-5 space-y-2 text-left">
+            <div className="mt-5 w-full space-y-2">
               {[
                 { t: "Merge Intervals", d: "Medium", s: 86 },
                 { t: "LRU Cache", d: "Hard", s: 72 },
@@ -199,7 +225,9 @@ export const FeatureSection: React.FC = () => {
                   style={{ borderColor: "var(--color-line)", background: "var(--color-panel)" }}
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className={`badge ${row.d === "Hard" ? "diff-hard" : "diff-medium"}`}>{row.d}</span>
+                    <span className={`badge ${row.d === "Hard" ? "diff-hard" : "diff-medium"}`}>
+                      {row.d}
+                    </span>
                     <span className="text-sm">{row.t}</span>
                   </div>
                   <span className="mono text-xs text-[color:var(--color-gold-bright)]">{row.s}</span>
@@ -210,7 +238,7 @@ export const FeatureSection: React.FC = () => {
         </Reveal>
       </div>
 
-      {/* Developer tools */}
+      {/* ── Developer tools ── */}
       <Reveal className="mx-auto mt-24 max-w-2xl text-center">
         <span className="eyebrow">Built for developers</span>
         <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -221,16 +249,16 @@ export const FeatureSection: React.FC = () => {
         </p>
       </Reveal>
 
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {DEV_TOOLS.map((f, i) => (
           <Reveal key={f.title} delay={i * 60}>
-            <article className="card card-interactive card-glow h-full p-6 text-center lg:text-left">
-              <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: f.tint, color: f.color }}>
-                  {f.icon}
-                </span>
-                <h3 className="text-lg font-semibold">{f.title}</h3>
-              </div>
+            <article className="card card-interactive card-glow flex h-full flex-col items-center p-6 text-center lg:items-start lg:text-left">
+              <CardHeader
+                icon={f.icon}
+                tint={f.tint}
+                color={f.color}
+                title={f.title}
+              />
               <p className="text-sm text-[color:var(--color-fg-muted)]">{f.body}</p>
             </article>
           </Reveal>

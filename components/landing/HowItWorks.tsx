@@ -27,7 +27,7 @@ const STEPS = [
 
 export const HowItWorks: React.FC = () => {
   return (
-    <section id="how-it-works" className="relative mx-auto max-w-6xl px-5 py-24 sm:py-32">
+    <section id="how-it-works" className="relative mx-auto w-full max-w-6xl overflow-hidden px-5 py-24 sm:py-32">
       <Reveal className="max-w-2xl">
         <span className="eyebrow">How it works</span>
         <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">

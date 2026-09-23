@@ -78,6 +78,7 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    overflow-x: hidden; /* prevent any child from creating horizontal scroll */
   }
 
   body {
@@ -86,6 +87,8 @@
     font-family: var(--font-sans);
     font-feature-settings: "cv02", "cv03", "cv04", "ss01";
     letter-spacing: -0.011em;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   ::selection {

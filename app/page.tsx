@@ -38,12 +38,12 @@ export default function Home() {
     );
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen w-full overflow-hidden">
       <AppBackground variant="landing" />
       <LandingNav />
 
       {/* Hero */}
-      <section id="practice" className="relative mx-auto max-w-6xl px-5 pt-36 pb-20 sm:pt-44">
+      <section id="practice" className="relative mx-auto w-full max-w-6xl overflow-hidden px-5 pb-20 pt-36 sm:pt-44">
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
             <span className="badge badge-gold mx-auto">
@@ -76,7 +76,7 @@ export default function Home() {
 
         {/* Hero visual */}
         <Reveal delay={220} className="mt-16">
-          <div className="relative mx-auto max-w-4xl">
+          <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[18px]">
             <div
               className="absolute -inset-x-8 -top-8 bottom-0 -z-10 rounded-[2rem]"
               style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(230,178,74,0.12), transparent 70%)" }}

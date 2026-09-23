@@ -103,11 +103,11 @@ export const InterviewPreview: React.FC<{ className?: string }> = ({ className =
         </div>
 
         {/* code editor */}
-        <div className="p-4 font-mono text-[12.5px]" style={{ background: "var(--color-inset)" }}>
+        <div className="overflow-hidden p-4 font-mono text-[12.5px]" style={{ background: "var(--color-inset)" }}>
           {CODE_LINES.map((line, i) => (
             <div
               key={i}
-              className="flex gap-3 whitespace-pre"
+              className="flex gap-3 overflow-hidden whitespace-pre"
               style={{
                 opacity: i < shownLines ? 1 : 0,
                 transform: i < shownLines ? "none" : "translateY(3px)",
