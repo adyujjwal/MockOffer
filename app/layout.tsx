@@ -22,7 +22,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mockoffer.live';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "MockOffer — Practice coding interviews like they're real",
+    default: "MockOffer: Practice coding interviews like they're real",
     template: "%s · MockOffer",
   },
   description:
@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "MockOffer",
-    title: "MockOffer — Practice coding interviews like they're real",
+    title: "MockOffer: Practice coding interviews like they're real",
     description:
       "AI-powered mock coding interviews that challenge your problem solving, analyze your code, and show you exactly how to improve.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MockOffer — Practice coding interviews like they're real",
+    title: "MockOffer: Practice coding interviews like they're real",
     description:
       "AI-powered mock coding interviews with an honest, on-pattern debrief.",
   },

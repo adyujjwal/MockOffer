@@ -1,7 +1,7 @@
 /**
  * Parses the AI feedback markdown string produced by the interview flow into a
  * structured object. The string format is defined in app/interview/page.tsx and
- * must stay in sync with it — this parser is tolerant of missing sections.
+ * must stay in sync with it; this parser is tolerant of missing sections.
  */
 
 export interface ParsedFeedback {

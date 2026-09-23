@@ -1,29 +1,24 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLoading } from './LoadingProvider';
 import { AIOrb } from './ui/AIOrb';
-import { Building, Calendar, Target, ArrowRight, X } from './ui/icons';
+import { Building, Calendar, Target, ArrowRight, X, Check, Sparkle } from './ui/icons';
 
 interface InterviewSetupModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ROLES = [
+// Fallback roles if the company lookup somehow returns none.
+const FALLBACK_ROLES = [
   'Software Engineer',
   'Senior Software Engineer',
-  'Staff Software Engineer',
   'Frontend Engineer',
   'Backend Engineer',
   'Full Stack Engineer',
-  'Mobile Engineer',
-  'DevOps Engineer',
-  'Data Engineer',
   'Machine Learning Engineer',
-  'Engineering Manager',
-  'Technical Lead',
-  'Product Manager'
 ];
 
 const EXPERIENCE = [
@@ -34,11 +29,35 @@ const EXPERIENCE = [
   { value: '11', label: 'Staff+', hint: '11+ yrs' },
 ];
 
+type VerifyStatus = 'idle' | 'checking' | 'valid' | 'invalid';
+
 export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProps) {
   const [company, setCompany] = useState('');
   const [experience, setExperience] = useState('');
   const [role, setRole] = useState('');
   const router = useRouter();
+  const { setLoading, setLoadingMessage } = useLoading();
+
+  // Company validation state
+  const [status, setStatus] = useState<VerifyStatus>('idle');
+  const [canonicalName, setCanonicalName] = useState('');
+  const [roles, setRoles] = useState<string[]>([]);
+  const [verifyMessage, setVerifyMessage] = useState('');
+
+  const resetAll = useCallback(() => {
+    setCompany('');
+    setExperience('');
+    setRole('');
+    setStatus('idle');
+    setCanonicalName('');
+    setRoles([]);
+    setVerifyMessage('');
+  }, []);
+
+  const handleClose = useCallback(() => {
+    resetAll();
+    onClose();
+  }, [resetAll, onClose]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,40 +66,87 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
+
+  // Typing in the company field invalidates any previous verification.
+  const handleCompanyChange = (value: string) => {
+    setCompany(value);
+    if (status !== 'idle') {
+      setStatus('idle');
+      setCanonicalName('');
+      setRoles([]);
+      setRole('');
+      setVerifyMessage('');
+    }
+  };
+
+  const verifyCompany = async () => {
+    const name = company.trim();
+    if (!name || status === 'checking') return;
+
+    setStatus('checking');
+    setVerifyMessage('');
+    setRoles([]);
+    setRole('');
+
+    try {
+      const res = await fetch('/api/ai/company-roles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ company: name }),
+      });
+
+      if (!res.ok) {
+        throw new Error('lookup failed');
+      }
+
+      const data = await res.json() as {
+        valid: boolean;
+        canonicalName: string;
+        roles: string[];
+        message?: string;
+      };
+
+      if (data.valid) {
+        setStatus('valid');
+        setCanonicalName(data.canonicalName || name);
+        setRoles(data.roles && data.roles.length ? data.roles : FALLBACK_ROLES);
+        setVerifyMessage('');
+      } else {
+        setStatus('invalid');
+        setVerifyMessage(data.message || "We couldn't recognize that company. Check the spelling or try another.");
+      }
+    } catch {
+      setStatus('invalid');
+      setVerifyMessage("Couldn't verify that company right now. Check your connection and try again.");
+    }
+  };
 
   const handleStartInterview = () => {
-    if (!company.trim() || !experience || !role) {
-      return;
-    }
+    if (status !== 'valid' || !experience || !role) return;
 
     const interviewSetup = {
-      company: { id: 'custom', name: company.trim() },
+      company: { id: 'custom', name: canonicalName || company.trim() },
       experience: parseInt(experience),
-      role: role,
-      timestamp: Date.now()
+      role,
+      timestamp: Date.now(),
     };
 
     localStorage.setItem('interview_setup', JSON.stringify(interviewSetup));
 
-    // Small delay before navigation to ensure localStorage is written
-    setTimeout(() => {
-      router.push('/interview');
-      onClose();
-    }, 100);
-  };
+    // Show the global loader immediately so there's no flash of the dashboard
+    // while the /interview route mounts. The loader lives in the root layout,
+    // so it persists across the client-side navigation.
+    setLoadingMessage('MockOffer is checking past interview experiences...');
+    setLoading(true);
 
-  const handleClose = () => {
-    setCompany('');
-    setExperience('');
-    setRole('');
+    router.push('/interview');
     onClose();
   };
 
   if (!isOpen) return null;
 
-  const isFormValid = company.trim() && experience && role;
+  const isFormValid = status === 'valid' && !!experience && !!role;
   const expLabel = EXPERIENCE.find((e) => e.value === experience)?.label;
 
   return (
@@ -89,7 +155,7 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
       onClick={handleClose}
     >
       <div
-        className="card animate-scale-in w-full max-w-lg overflow-hidden"
+        className="card animate-scale-in max-h-[92vh] w-full max-w-lg overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -106,32 +172,108 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
               </p>
             </div>
           </div>
-          <button
-            onClick={handleClose}
-            className="btn btn-ghost -mr-2 -mt-1 p-2"
-            aria-label="Close"
-          >
+          <button onClick={handleClose} className="btn btn-ghost -mr-2 -mt-1 p-2" aria-label="Close">
             <X size={18} />
           </button>
         </div>
 
         {/* Form */}
         <div className="space-y-5 p-6">
+          {/* Company */}
           <div>
             <label className="mb-2 flex items-center gap-2 text-sm font-medium text-[color:var(--color-fg-muted)]">
               <Building size={15} className="text-[color:var(--color-gold-bright)]" />
               Company
             </label>
-            <input
-              type="text"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="e.g. Google, Stripe, Netflix…"
-              className="field"
-              autoFocus
-            />
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => handleCompanyChange(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    verifyCompany();
+                  }
+                }}
+                placeholder="e.g. Google, Stripe, Netflix…"
+                className="field flex-1"
+                autoFocus
+                aria-invalid={status === 'invalid'}
+              />
+              <button
+                type="button"
+                onClick={verifyCompany}
+                disabled={!company.trim() || status === 'checking'}
+                className="btn btn-secondary shrink-0"
+              >
+                {status === 'checking' ? (
+                  <>
+                    <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-transparent" style={{ borderTopColor: 'var(--color-gold)', borderRightColor: 'var(--color-gold)' }} />
+                    Checking
+                  </>
+                ) : status === 'valid' ? (
+                  <>
+                    <Check size={15} />
+                    Verified
+                  </>
+                ) : (
+                  'Verify'
+                )}
+              </button>
+            </div>
+
+            {status === 'valid' && (
+              <div className="animate-fade-up mt-2 flex items-center gap-1.5 text-sm text-[color:var(--color-success)]">
+                <Check size={14} />
+                <span>
+                  Verified <span className="font-medium">{canonicalName}</span>. Pick a role below.
+                </span>
+              </div>
+            )}
+            {status === 'invalid' && (
+              <div className="animate-fade-up mt-2 text-sm text-[color:var(--color-danger)]">
+                {verifyMessage}
+              </div>
+            )}
+            {status === 'idle' && (
+              <p className="mt-2 text-xs text-[color:var(--color-fg-subtle)]">
+                Verify the company so MockOffer can tailor the roles and question.
+              </p>
+            )}
           </div>
 
+          {/* Role (only after a valid company) */}
+          {status === 'valid' && (
+            <div className="animate-fade-up">
+              <label className="mb-2 flex items-center gap-2 text-sm font-medium text-[color:var(--color-fg-muted)]">
+                <Target size={15} className="text-[color:var(--color-gold-bright)]" />
+                Role at {canonicalName}
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {roles.map((r) => {
+                  const selected = role === r;
+                  return (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setRole(r)}
+                      className="rounded-lg border px-3 py-2 text-sm transition-all"
+                      style={{
+                        borderColor: selected ? 'var(--color-gold)' : 'var(--color-line-strong)',
+                        background: selected ? 'rgba(230,178,74,0.08)' : 'var(--color-inset)',
+                        color: selected ? 'var(--color-gold-bright)' : 'var(--color-fg)',
+                      }}
+                    >
+                      {r}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Experience */}
           <div>
             <label className="mb-2 flex items-center gap-2 text-sm font-medium text-[color:var(--color-fg-muted)]">
               <Calendar size={15} className="text-[color:var(--color-gold-bright)]" />
@@ -161,33 +303,6 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
             </div>
           </div>
 
-          <div>
-            <label className="mb-2 flex items-center gap-2 text-sm font-medium text-[color:var(--color-fg-muted)]">
-              <Target size={15} className="text-[color:var(--color-gold-bright)]" />
-              Role
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="field cursor-pointer appearance-none"
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a2a4ac'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E\")",
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 0.75rem center',
-                backgroundSize: '1.1rem',
-                paddingRight: '2.5rem',
-              }}
-            >
-              <option value="">Select a role…</option>
-              {ROLES.map((roleOption) => (
-                <option key={roleOption} value={roleOption} style={{ background: '#131418' }}>
-                  {roleOption}
-                </option>
-              ))}
-            </select>
-          </div>
-
           {isFormValid && (
             <div
               className="animate-fade-up rounded-lg border p-3 text-sm"
@@ -195,7 +310,7 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
             >
               <span className="text-[color:var(--color-fg-muted)]">Preparing: </span>
               <span className="font-medium text-[color:var(--color-gold-bright)]">
-                {role} at {company.trim()} · {expLabel}
+                {role} at {canonicalName} · {expLabel}
               </span>
             </div>
           )}
@@ -206,11 +321,8 @@ export function InterviewSetupModal({ isOpen, onClose }: InterviewSetupModalProp
           <button onClick={handleClose} className="btn btn-secondary flex-1">
             Cancel
           </button>
-          <button
-            onClick={handleStartInterview}
-            disabled={!isFormValid}
-            className="btn btn-primary flex-1"
-          >
+          <button onClick={handleStartInterview} disabled={!isFormValid} className="btn btn-primary flex-1">
+            <Sparkle size={16} />
             Start interview
             <ArrowRight size={16} className="btn-arrow" />
           </button>

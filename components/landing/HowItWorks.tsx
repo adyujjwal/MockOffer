@@ -20,7 +20,7 @@ const STEPS = [
   {
     n: "03",
     title: "Get an honest debrief",
-    body: "Correctness, complexity, code quality and edge cases — plus exactly what to fix and what to practice next.",
+    body: "Correctness, complexity, code quality and edge cases, plus exactly what to fix and what to practice next.",
     Icon: Sparkle,
   },
 ];

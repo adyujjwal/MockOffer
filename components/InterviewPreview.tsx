@@ -6,7 +6,7 @@ import { Clock } from "./ui/icons";
 
 /**
  * A stylised, self-contained preview of a MockOffer session for the hero.
- * Decorative only — no real editor — but conveys the product at a glance:
+ * Decorative only, no real editor, but conveys the product at a glance:
  * AI interviewer on the left, code on the right, complexity read-out below.
  */
 

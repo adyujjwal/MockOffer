@@ -1,7 +1,7 @@
 import * as React from "react";
 
 /**
- * MockOffer icon set — a single, consistent stroke system.
+ * MockOffer icon set: a single, consistent stroke system.
  * 24×24 grid, 1.75 stroke, round caps/joins. No external dependency.
  */
 
@@ -282,4 +282,61 @@ export const Doc = make(
     <path d="M9 13h6M9 17h6" />
   </>,
   "Doc",
+);
+
+export const Minus = make(<path d="M5 12h14" />, "Minus");
+
+export const Copy = make(
+  <>
+    <rect x="9" y="9" width="11" height="11" rx="2" />
+    <path d="M5 15V5a1 1 0 0 1 1-1h9" />
+  </>,
+  "Copy",
+);
+
+export const Download = make(
+  <>
+    <path d="M12 4v11" />
+    <path d="m7 11 5 5 5-5" />
+    <path d="M5 20h14" />
+  </>,
+  "Download",
+);
+
+export const Maximize = make(
+  <>
+    <path d="M4 9V5a1 1 0 0 1 1-1h4" />
+    <path d="M20 9V5a1 1 0 0 0-1-1h-4" />
+    <path d="M4 15v4a1 1 0 0 0 1 1h4" />
+    <path d="M20 15v4a1 1 0 0 1-1 1h-4" />
+  </>,
+  "Maximize",
+);
+
+export const Minimize = make(
+  <>
+    <path d="M9 4v4a1 1 0 0 1-1 1H4" />
+    <path d="M15 4v4a1 1 0 0 0 1 1h4" />
+    <path d="M9 20v-4a1 1 0 0 0-1-1H4" />
+    <path d="M15 20v-4a1 1 0 0 1 1-1h4" />
+  </>,
+  "Minimize",
+);
+
+export const Cog = make(
+  <>
+    <circle cx="12" cy="12" r="3" />
+    <path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1l2.1-2.1M17 7l2.1-2.1" />
+  </>,
+  "Cog",
+);
+
+export const WrapText = make(
+  <>
+    <path d="M4 6h16" />
+    <path d="M4 12h13a3 3 0 0 1 0 6h-3" />
+    <path d="m16 15-2 3 2 3" transform="translate(0 -3)" />
+    <path d="M4 18h5" />
+  </>,
+  "WrapText",
 );

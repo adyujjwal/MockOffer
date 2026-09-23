@@ -3,8 +3,8 @@ import * as React from "react";
 /**
  * MockOffer brand mark.
  *
- * Concept: a geometric "M" split at its central valley — the left half in
- * off-white, the right half in gold — so the negative space reads as a code
+ * Concept: a geometric "M" split at its central valley, the left half in
+ * off-white, the right half in gold, so the negative space reads as a code
  * chevron and the two-tone split mirrors the "Mock / Offer" wordmark. A small
  * blinking cursor after the wordmark supplies the terminal reference.
  *
@@ -68,7 +68,7 @@ export const LogoMark: React.FC<LogoMarkProps> = ({
         </>
       )}
 
-      {/* Left half of the M — off-white */}
+      {/* Left half of the M, off-white */}
       <path
         d="M9 28.5V13L20 21.5"
         stroke={light}
@@ -76,7 +76,7 @@ export const LogoMark: React.FC<LogoMarkProps> = ({
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* Right half of the M — gold */}
+      {/* Right half of the M, gold */}
       <path
         d="M20 21.5L31 13V28.5"
         stroke={gold}

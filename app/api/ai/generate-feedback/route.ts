@@ -53,7 +53,7 @@ function getFallbackFeedback(): FeedbackResponse {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Authentication — only signed-in users may spend AI credits.
+    // 1. Authentication: only signed-in users may spend AI credits.
     const { userId } = await auth();
     if (!userId) return unauthorized();
 
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4.1',
         messages: [
           {
             role: 'system',

@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 // Security headers applied to every response. Deliberately conservative so they
 // don't interfere with Clerk's auth flows or the Monaco editor's web workers.
-// A full Content-Security-Policy is intentionally left out here — it needs to be
+// A full Content-Security-Policy is intentionally left out here; it needs to be
 // tuned against Clerk + Monaco and is best added with report-only monitoring.
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },

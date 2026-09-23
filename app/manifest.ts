@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'MockOffer — AI coding interview practice',
+    name: 'MockOffer: AI coding interview practice',
     short_name: 'MockOffer',
     description:
       'AI-powered mock coding interviews that challenge your problem solving, analyze your code, and show you exactly how to improve.',

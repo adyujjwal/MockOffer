@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
  * Best-effort in-memory sliding-window rate limiter.
  *
  * Note: in a multi-instance serverless deployment each instance keeps its own
- * counter, so this is not a hard global guarantee — pair it with a platform /
+ * counter, so this is not a hard global guarantee; pair it with a platform /
  * WAF / gateway limit in production. It is still effective at stopping casual
  * abuse, runaway client loops, and accidental credit burn.
  */

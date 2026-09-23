@@ -10,7 +10,7 @@ const STATUS_LABEL: Record<AIStatus, string> = {
 };
 
 /**
- * Abstract AI presence indicator — a soft breathing core with orbiting
+ * Abstract AI presence indicator: a soft breathing core with orbiting
  * particles. Deliberately not a robot or a brain: it reads as an intelligent
  * signal. Colour shifts subtly by status.
  */

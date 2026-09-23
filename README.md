@@ -28,7 +28,7 @@
 
 ## 🚀 Why MockOffer?
 
-Landing your dream job at top tech companies requires more than just knowing how to code—it requires **practice under real interview conditions**. MockOffer bridges the gap between self-study and actual interviews by providing:
+Landing your dream job at top tech companies requires more than just knowing how to code; it requires **practice under real interview conditions**. MockOffer bridges the gap between self-study and actual interviews by providing:
 
 | | |
 |---|---|
@@ -183,13 +183,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🎮 Usage
 
-1. **Sign Up/Login** — Create an account or sign in
-2. **Start Interview** — Click "Start Interview Session"
-3. **Configure** — Select company, role, and experience level
-4. **Set Timer** — Choose your interview duration
-5. **Code** — Write your solution in the Monaco editor
-6. **Submit** — Get instant AI feedback
-7. **Review** — Track progress in your dashboard
+1. **Sign Up/Login**: Create an account or sign in
+2. **Start Interview**: Click "Start Interview Session"
+3. **Configure**: Select company, role, and experience level
+4. **Set Timer**: Choose your interview duration
+5. **Code**: Write your solution in the Monaco editor
+6. **Submit**: Get instant AI feedback
+7. **Review**: Track progress in your dashboard
 
 ---
 
@@ -219,9 +219,9 @@ mockoffer/
 
 MockOffer features a **Luxury Noir** theme:
 
-- **Primary**: Gold (#D4AF37) — Excellence & achievement
-- **Background**: Deep blacks — Professional & focused
-- **Accents**: Gradient glows — Modern & engaging
+- **Primary**: Gold (#D4AF37), for excellence & achievement
+- **Background**: Deep blacks, professional & focused
+- **Accents**: Gradient glows, modern & engaging
 
 ---
 

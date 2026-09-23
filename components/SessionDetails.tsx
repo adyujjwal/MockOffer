@@ -50,10 +50,9 @@ export const SessionDetails: React.FC<{
   if (!interview) return null;
 
   return (
-    <div className="fixed inset-0 z-[80] flex justify-end bg-black/70 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/75 p-4 backdrop-blur-md" onClick={onClose}>
       <div
-        className="animate-fade-up flex h-full w-full max-w-2xl flex-col border-l"
-        style={{ background: "var(--color-panel)", borderColor: "var(--color-line)" }}
+        className="card animate-scale-in flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

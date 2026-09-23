@@ -108,7 +108,7 @@ export default function Dashboard() {
             <StatTile
               Icon={Gauge}
               label="Avg code quality"
-              value={metrics.avgQuality !== null ? `${metrics.avgQuality}` : '—'}
+              value={metrics.avgQuality !== null ? `${metrics.avgQuality}` : '-'}
               suffix={metrics.avgQuality !== null ? '/10' : ''}
               tint="#8aa2ff"
             />
@@ -148,7 +148,7 @@ export default function Dashboard() {
                   </h3>
                 </div>
                 <p className="text-sm text-[color:var(--color-fg-muted)]">
-                  Consistency beats cramming. One focused session a day compounds fast — vary the
+                  Consistency beats cramming. One focused session a day compounds fast. Vary the
                   company and difficulty to cover more ground.
                 </p>
               </div>
@@ -206,7 +206,7 @@ export default function Dashboard() {
                           </div>
                         </div>
                         <span className="hidden w-28 truncate text-sm text-[color:var(--color-fg-muted)] sm:block">
-                          {interview.company && interview.company !== 'General' ? interview.company : '—'}
+                          {interview.company && interview.company !== 'General' ? interview.company : '-'}
                         </span>
                         <span className="hidden w-24 text-sm text-[color:var(--color-fg-subtle)] sm:block">
                           {formatDate(interview.timestamp)}
