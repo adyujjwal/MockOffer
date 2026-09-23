@@ -41,12 +41,23 @@ export function useLoading() {
 
 function GlobalLoader({ message }: { message: string }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-card rounded-lg border border-border p-8 shadow-2xl">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="text-white font-medium">{message}</p>
-        </div>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div className="card animate-scale-in flex flex-col items-center gap-5 px-10 py-8">
+        <span className="relative inline-flex h-12 w-12 items-center justify-center">
+          <span
+            className="absolute inset-0 rounded-full border-2"
+            style={{ borderColor: "var(--color-line-strong)" }}
+          />
+          <span
+            className="absolute inset-0 animate-spin rounded-full border-2 border-transparent"
+            style={{ borderTopColor: "var(--color-gold)" }}
+          />
+          <span
+            className="h-2 w-2 rounded-full"
+            style={{ background: "var(--color-gold)", animation: "breathe 2s ease-in-out infinite" }}
+          />
+        </span>
+        <p className="text-sm font-medium text-[color:var(--color-fg-muted)]">{message}</p>
       </div>
     </div>
   );

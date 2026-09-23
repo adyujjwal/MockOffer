@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ClerkProvider } from '@clerk/nextjs';
 import { LoadingProvider } from '../components/LoadingProvider';
 import "./globals.css";
 
-// Using Inter as the closest approximation to Neue Haas Grotesk
-const neueHaasGrotesk = Inter({
+const sans = Inter({
   variable: "--font-neue-haas",
   subsets: ["latin"],
   display: 'swap',
@@ -18,9 +17,49 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mockoffer.live';
+
 export const metadata: Metadata = {
-  title: "MockOffer - AI-Powered Mock Coding Interviews",
-  description: "Practice coding interviews with AI-powered feedback and analysis",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "MockOffer — Practice coding interviews like they're real",
+    template: "%s · MockOffer",
+  },
+  description:
+    "AI-powered mock coding interviews that challenge your problem solving, analyze your code, and show you exactly how to improve.",
+  applicationName: "MockOffer",
+  keywords: [
+    "coding interview practice",
+    "mock interview",
+    "AI interviewer",
+    "technical interview prep",
+    "data structures and algorithms",
+    "LeetCode alternative",
+  ],
+  authors: [{ name: "MockOffer" }],
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "MockOffer",
+    title: "MockOffer — Practice coding interviews like they're real",
+    description:
+      "AI-powered mock coding interviews that challenge your problem solving, analyze your code, and show you exactly how to improve.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MockOffer — Practice coding interviews like they're real",
+    description:
+      "AI-powered mock coding interviews with an honest, on-pattern debrief.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#08090a",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -32,7 +71,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${neueHaasGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased luxury-noir-theme`}
+          className={`${sans.variable} ${jetbrainsMono.variable} font-sans antialiased`}
         >
           <LoadingProvider>
             {children}

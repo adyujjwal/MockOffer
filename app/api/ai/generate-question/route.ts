@@ -1,4 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
+import {
+  rateLimit,
+  isNonEmptyString,
+  isFiniteNumberInRange,
+  badRequest,
+  unauthorized,
+  tooManyRequests,
+} from '../../../../lib/apiGuard';
 
 interface QuestionRequest {
   company: string;
@@ -103,8 +112,28 @@ function generateMultiLanguageCode(functionName: string, params: string[]): Reco
 
 export async function POST(request: NextRequest) {
   try {
-    const body: QuestionRequest = await request.json();
+    // 1. Authentication — only signed-in users may spend AI credits.
+    const { userId } = await auth();
+    if (!userId) return unauthorized();
+
+    // 2. Rate limit per user (20 questions / minute).
+    const rl = rateLimit(`generate-question:${userId}`, 20, 60_000);
+    if (!rl.ok) return tooManyRequests(rl.retryAfter);
+
+    // 3. Parse and validate input.
+    let body: QuestionRequest;
+    try {
+      body = (await request.json()) as QuestionRequest;
+    } catch {
+      return badRequest('Invalid JSON body');
+    }
     const { company, role, experienceLevel } = body;
+
+    if (!isNonEmptyString(company, 100)) return badRequest('company is required (max 100 chars)');
+    if (!isNonEmptyString(role, 100)) return badRequest('role is required (max 100 chars)');
+    if (!isFiniteNumberInRange(experienceLevel, 0, 50)) {
+      return badRequest('experienceLevel must be a number between 0 and 50');
+    }
 
     const apiKey = process.env.OPENAI_API_KEY;
     

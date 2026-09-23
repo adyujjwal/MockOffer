@@ -1,116 +1,143 @@
-import React from 'react';
+import * as React from "react";
 
-interface MockOfferLogoProps {
+/**
+ * MockOffer brand mark.
+ *
+ * Concept: a geometric "M" split at its central valley — the left half in
+ * off-white, the right half in gold — so the negative space reads as a code
+ * chevron and the two-tone split mirrors the "Mock / Offer" wordmark. A small
+ * blinking cursor after the wordmark supplies the terminal reference.
+ *
+ * Works in full colour, monochrome (currentColor), and at favicon scale.
+ */
+
+interface LogoMarkProps {
+  size?: number;
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Render the glyph in a single colour (for monochrome / favicon contexts). */
+  mono?: boolean;
+  title?: string;
 }
 
-export const MockOfferLogo: React.FC<MockOfferLogoProps> = ({ 
-  className = '', 
-  size = 'md' 
+export const LogoMark: React.FC<LogoMarkProps> = ({
+  size = 32,
+  className = "",
+  mono = false,
+  title = "MockOffer",
 }) => {
-  const sizeClasses = {
-    sm: 'w-32 h-12',
-    md: 'w-48 h-16', 
-    lg: 'w-64 h-20',
-    xl: 'w-80 h-24'
-  };
+  const uid = React.useId();
+  const gold = mono ? "currentColor" : "url(#" + uid + "-g)";
+  const light = mono ? "currentColor" : "#f5f5f6";
 
   return (
-    <div className={`${sizeClasses[size]} ${className}`}>
-      <svg
-        viewBox="0 0 320 80"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#D4AF37" />
-            <stop offset="50%" stopColor="#F5E862" />
-            <stop offset="100%" stopColor="#D4AF37" />
-          </linearGradient>
-          <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#D4AF37" opacity="0.8" />
-            <stop offset="100%" stopColor="#D4AF37" opacity="0.2" />
-          </linearGradient>
-          <filter id="neonGlow">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-            <feMerge> 
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      role="img"
+      aria-label={title}
+    >
+      <defs>
+        <linearGradient id={`${uid}-g`} x1="20" y1="12" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#f5cd6b" />
+          <stop offset="1" stopColor="#d99f37" />
+        </linearGradient>
+        <linearGradient id={`${uid}-tile`} x1="20" y1="1" x2="20" y2="39" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#191b20" />
+          <stop offset="1" stopColor="#0c0d10" />
+        </linearGradient>
+      </defs>
 
-        {/* Background geometric elements */}
-        <rect x="0" y="20" width="30" height="30" rx="4" fill="url(#accentGradient)" opacity="0.3" />
-        <polygon points="290,10 310,20 300,35 285,25" fill="url(#accentGradient)" opacity="0.4" />
-        
-        {/* Coding brackets accent */}
-        <text x="15" y="15" fontSize="16" fill="url(#logoGradient)" fontFamily="var(--font-jetbrains-mono)" opacity="0.7">{'{'}</text>
-        <text x="300" y="70" fontSize="16" fill="url(#logoGradient)" fontFamily="var(--font-jetbrains-mono)" opacity="0.7">{'}'}</text>
+      {/* Tile */}
+      {!mono && (
+        <>
+          <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="11" fill={`url(#${uid}-tile)`} />
+          <rect
+            x="0.75"
+            y="0.75"
+            width="38.5"
+            height="38.5"
+            rx="11"
+            stroke="rgba(230,178,74,0.22)"
+            strokeWidth="1"
+          />
+          <rect x="1.75" y="1.75" width="36.5" height="18" rx="10" fill="rgba(255,255,255,0.02)" />
+        </>
+      )}
 
-        {/* Main logo text */}
-        <g filter="url(#neonGlow)">
-          <text
-            x="50"
-            y="45"
-            fontSize="28"
-            fontWeight="700"
-            fill="url(#logoGradient)"
-            fontFamily="var(--font-neue-haas)"
-            letterSpacing="0.05em"
-          >
-            Mock
-          </text>
-          <text
-            x="140"
-            y="45"
-            fontSize="28"
-            fontWeight="300"
-            fill="#F5F5F5"
-            fontFamily="var(--font-neue-haas)"
-            letterSpacing="0.05em"
-          >
-            Offer
-          </text>
-        </g>
+      {/* Left half of the M — off-white */}
+      <path
+        d="M9 28.5V13L20 21.5"
+        stroke={light}
+        strokeWidth="3.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Right half of the M — gold */}
+      <path
+        d="M20 21.5L31 13V28.5"
+        stroke={gold}
+        strokeWidth="3.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
 
-        {/* Underline accent */}
-        <line 
-          x1="50" 
-          y1="55" 
-          x2="230" 
-          y2="55" 
-          stroke="url(#logoGradient)" 
-          strokeWidth="2"
-          opacity="0.8"
+interface MockOfferLogoProps {
+  variant?: "full" | "mark" | "wordmark";
+  /** Height of the mark tile in px; wordmark scales relative to it. */
+  size?: number;
+  className?: string;
+  showCursor?: boolean;
+}
+
+export const MockOfferLogo: React.FC<MockOfferLogoProps> = ({
+  variant = "full",
+  size = 30,
+  className = "",
+  showCursor = true,
+}) => {
+  const fontSize = Math.round(size * 0.62);
+
+  const wordmark = (
+    <span
+      className="inline-flex items-baseline font-semibold tracking-tight leading-none"
+      style={{ fontSize }}
+    >
+      <span style={{ color: "var(--color-fg)" }}>Mock</span>
+      <span className="text-gradient-gold">Offer</span>
+      {showCursor && (
+        <span
+          aria-hidden="true"
+          className="ml-[0.12em] inline-block rounded-[1px]"
+          style={{
+            width: Math.max(2, Math.round(size * 0.07)),
+            height: fontSize * 0.86,
+            background: "var(--color-gold)",
+            animation: "blink 1.1s step-end infinite",
+            transform: "translateY(1px)",
+          }}
         />
+      )}
+    </span>
+  );
 
-        {/* Binary/code dots pattern */}
-        <circle cx="240" cy="35" r="2" fill="url(#logoGradient)" opacity="0.6">
-          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="250" cy="35" r="2" fill="url(#logoGradient)" opacity="0.4">
-          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.5s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="260" cy="35" r="2" fill="url(#logoGradient)" opacity="0.7">
-          <animate attributeName="opacity" values="0.7;1;0.7" dur="1.8s" repeatCount="indefinite" />
-        </circle>
+  if (variant === "mark") {
+    return <LogoMark size={size} className={className} />;
+  }
+  if (variant === "wordmark") {
+    return <span className={className}>{wordmark}</span>;
+  }
 
-        {/* Tagline */}
-        <text
-          x="50"
-          y="68"
-          fontSize="10"
-          fill="#A0A0A0"
-          fontFamily="var(--font-neue-haas)"
-          letterSpacing="0.1em"
-        >
-          AI-POWERED CODING INTERVIEWS
-        </text>
-      </svg>
-    </div>
+  return (
+    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+      <LogoMark size={size} />
+      {wordmark}
+    </span>
   );
 };

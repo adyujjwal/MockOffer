@@ -21,12 +21,12 @@ export function LoadingButton({
 }: LoadingButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const baseClasses = 'inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed';
-  
+  const baseClasses = 'btn';
+
   const variantClasses = {
-    primary: 'btn-luxury',
-    secondary: 'btn-luxury-outline', 
-    danger: 'bg-red-500 hover:bg-red-600 text-white px-4 py-2'
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    danger: 'btn-danger'
   };
 
   const handleClick = async () => {

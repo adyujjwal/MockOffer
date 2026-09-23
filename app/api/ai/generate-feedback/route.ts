@@ -1,4 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
+import {
+  rateLimit,
+  isNonEmptyString,
+  badRequest,
+  unauthorized,
+  tooManyRequests,
+} from '../../../../lib/apiGuard';
 
 interface FeedbackRequest {
   code: string;
@@ -45,8 +53,29 @@ function getFallbackFeedback(): FeedbackResponse {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: FeedbackRequest = await request.json();
+    // 1. Authentication — only signed-in users may spend AI credits.
+    const { userId } = await auth();
+    if (!userId) return unauthorized();
+
+    // 2. Rate limit per user (30 submissions / minute).
+    const rl = rateLimit(`generate-feedback:${userId}`, 30, 60_000);
+    if (!rl.ok) return tooManyRequests(rl.retryAfter);
+
+    // 3. Parse and validate input.
+    let body: FeedbackRequest;
+    try {
+      body = (await request.json()) as FeedbackRequest;
+    } catch {
+      return badRequest('Invalid JSON body');
+    }
     const { code, problem, language } = body;
+
+    // Allow empty code (an empty submission is still a valid attempt) but cap size.
+    if (typeof code !== 'string' || code.length > 60_000) {
+      return badRequest('code must be a string up to 60,000 characters');
+    }
+    if (!isNonEmptyString(problem, 20_000)) return badRequest('problem is required');
+    if (!isNonEmptyString(language, 40)) return badRequest('language is required');
 
     const apiKey = process.env.OPENAI_API_KEY;
     
