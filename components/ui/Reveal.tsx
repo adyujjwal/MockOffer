@@ -11,7 +11,10 @@ export const Reveal: React.FC<{
   className?: string;
   delay?: number;
   as?: React.ElementType;
-}> = ({ children, className = "", delay = 0, as: Tag = "div" }) => {
+  style?: React.CSSProperties;
+  /** Stagger direct children instead of fading the element as one block. */
+  stagger?: boolean;
+}> = ({ children, className = "", delay = 0, as: Tag = "div", style, stagger = false }) => {
   const ref = React.useRef<HTMLElement | null>(null);
   const [visible, setVisible] = React.useState(false);
 
@@ -33,11 +36,13 @@ export const Reveal: React.FC<{
     return () => obs.disconnect();
   }, []);
 
+  const base = stagger ? "reveal-stage" : "reveal";
+
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`${base} ${visible ? "is-visible" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
     >
       {children}
     </Tag>
