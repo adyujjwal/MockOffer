@@ -37,55 +37,55 @@ export default function Home() {
       <LandingNav />
 
       {/* ── Hero ── */}
-      <section id="practice" className="relative mx-auto w-full max-w-6xl overflow-hidden px-5 pb-10 pt-32 sm:pt-40">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
-          {/* Left: editorial copy */}
-          <div className="relative min-w-0">
-            {/* technical corner tick */}
-            <span
-              className="absolute -left-5 top-1 hidden h-10 w-px lg:block"
-              style={{ background: "linear-gradient(to bottom, var(--color-gold), transparent)" }}
-            />
-            <Reveal>
-              <span className="badge badge-gold">
-                <span
-                  className="inline-block h-1.5 w-1.5 rounded-full"
-                  style={{ background: "var(--color-gold)", animation: "breathe 2.4s ease-in-out infinite" }}
-                />
-                AI-powered coding interviews
-              </span>
-            </Reveal>
-            <Reveal delay={60}>
-              <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.03] tracking-tight sm:text-6xl xl:text-7xl">
-                Practice coding interviews.
-                <br />
-                <span className="text-gradient-gold">Like they&rsquo;re real.</span>
-              </h1>
-            </Reveal>
-            <Reveal delay={120}>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-[color:var(--color-fg-muted)]">
-                AI-powered mock interviews that challenge your problem solving, analyze your code,
-                and show you exactly where it breaks and how to improve.
-              </p>
-            </Reveal>
-            <Reveal delay={180}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <PrimaryCTA full />
-                <a href="#how-it-works" className="btn btn-secondary btn-lg w-full justify-center sm:w-auto">
-                  See how it works
-                </a>
-              </div>
-            </Reveal>
-          </div>
+      <section
+        id="practice"
+        className="relative w-full overflow-hidden px-6 pb-12 pt-32 sm:pt-40 lg:px-12"
+      >
+        {/* centered editorial copy */}
+        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+          <Reveal>
+            <h1
+              className="font-display display-hero text-balance"
+              style={{ fontWeight: 700 }}
+            >
+              <span style={{ color: "var(--color-fg)" }}>Practice coding interviews.</span>
+              <br />
+              <span className="font-display-italic text-gradient-gold-anim">Like they&rsquo;re real.</span>
+            </h1>
+          </Reveal>
 
-          {/* Right: live session */}
-          <Reveal delay={160} className="relative min-w-0">
-            {/* ambient bloom */}
-            <div
-              className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem]"
-              style={{ background: "radial-gradient(ellipse at 60% 0%, rgba(230,178,74,0.12), transparent 70%)" }}
-            />
-            {/* framing ticks */}
+          <Reveal delay={140}>
+            <p className="mt-7 max-w-2xl text-balance text-lg font-medium leading-relaxed text-[color:var(--color-fg-muted)]">
+              AI-powered mock interviews that challenge your problem solving, analyze your code,
+              and show you exactly where it breaks and how to improve.
+            </p>
+          </Reveal>
+
+          <Reveal delay={240}>
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              <PrimaryCTA full />
+              <a href="#how-it-works" className="btn btn-secondary btn-lg w-full justify-center sm:w-auto">
+                See how it works
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* live session workspace, centered below */}
+        <Reveal delay={320} className="relative mx-auto mt-16 block min-w-0 max-w-4xl">
+          {/* warm brand bloom */}
+          <div
+            className="glow-breathe pointer-events-none absolute -inset-10 -z-10 rounded-[3rem]"
+            style={{ background: "radial-gradient(ellipse at 50% 4%, rgba(230,178,74,0.16), transparent 72%)" }}
+          />
+          {/* cool technical focus glow */}
+          <div
+            className="focus-glow pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem]"
+            style={{ background: "radial-gradient(ellipse at 50% 70%, rgba(138,162,255,0.12), transparent 68%)" }}
+          />
+
+          <div className="hero-float relative">
+            {/* framing ticks (iris technical chrome) */}
             <div className="pointer-events-none absolute -inset-3 hidden sm:block" aria-hidden="true">
               {[
                 "left-0 top-0 border-l border-t",
@@ -96,22 +96,23 @@ export default function Home() {
                 <span
                   key={pos}
                   className={`absolute h-4 w-4 ${pos}`}
-                  style={{ borderColor: "var(--color-line-strong)" }}
+                  style={{ borderColor: "rgba(138,162,255,0.4)" }}
                 />
               ))}
             </div>
-            <div className="overflow-hidden rounded-[18px]">
+            <div className="overflow-hidden rounded-[18px]" style={{ boxShadow: "var(--shadow-lift)" }}>
               <InterviewPreview />
             </div>
-            <div className="mt-3 flex items-center justify-between px-1">
-              <span className="tech">Live session preview</span>
-              <span className="tech">twoSum · O(n)</span>
-            </div>
-          </Reveal>
-        </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between px-1">
+            <span className="tech">Live session preview</span>
+            <span className="tech text-iris">twoSum · O(n)</span>
+          </div>
+        </Reveal>
 
         {/* scroll cue */}
-        <Reveal delay={260} className="mt-14 hidden justify-center lg:flex">
+        <Reveal delay={420} className="mt-16 hidden justify-center lg:flex">
           <a
             href="#how-it-works"
             className="flex flex-col items-center gap-2 text-[color:var(--color-fg-faint)] transition-colors hover:text-[color:var(--color-fg-subtle)]"
@@ -136,25 +137,29 @@ export default function Home() {
       <HowItWorks />
 
       {/* ── Closing CTA ── */}
-      <section className="relative mx-auto w-full max-w-6xl px-5 pb-28">
+      <section className="relative w-full px-6 pb-28 lg:px-12">
         <Reveal>
-          <div className="card relative overflow-hidden px-6 py-16 text-center sm:px-16 sm:py-20">
+          <div className="card relative overflow-hidden px-6 py-20 text-center sm:px-16 sm:py-28">
+            {/* layered spotlight: warm brand bloom over a cool technical grid */}
+            <div className="bg-grid-iris absolute inset-0 opacity-40" aria-hidden="true" style={{ maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black, transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black, transparent 75%)" }} />
             <div className="bg-aurora" />
             <div className="noise absolute inset-0 opacity-[0.015]" aria-hidden="true" />
             {/* ambient status transition: INTERVIEW -> READY */}
-            <div className="relative mx-auto mb-7 flex items-center justify-center gap-3 text-[color:var(--color-fg-faint)]">
+            <div className="relative mx-auto mb-8 flex items-center justify-center gap-3 text-[color:var(--color-fg-faint)]">
               <span className="tech line-through decoration-[color:var(--color-fg-faint)]/60">Interview</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={14} className="text-iris" />
               <span className="tech" style={{ color: "var(--color-gold-bright)" }}>Ready</span>
             </div>
             <div className="relative">
-              <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                Your next interview starts here.
+              <h2 className="font-display display-cta text-balance">
+                Your next interview
+                <br className="hidden sm:block" />
+                <span className="font-display-italic text-gradient-gold"> starts here.</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-[color:var(--color-fg-muted)]">
+              <p className="mx-auto mt-6 max-w-lg text-lg text-[color:var(--color-fg-muted)]">
                 Think clearly. Code precisely. Know exactly what to improve before it counts.
               </p>
-              <div className="mt-8 flex justify-center">
+              <div className="mt-10 flex justify-center">
                 <PrimaryCTA />
               </div>
             </div>

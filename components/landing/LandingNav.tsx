@@ -52,7 +52,7 @@ export const LandingNav: React.FC = () => {
         }`}
         style={scrolled ? undefined : { background: "transparent" }}
       >
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+        <nav className="mx-auto flex h-16 w-full items-center justify-between px-6 lg:px-12">
           <Link href="/" aria-label="MockOffer home" className="shrink-0">
             <MockOfferLogo size={25} showCursor={false} />
           </Link>

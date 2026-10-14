@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Fraunces } from "next/font/google";
 import { ClerkProvider } from '@clerk/nextjs';
 import { LoadingProvider } from '../components/LoadingProvider';
 import "./globals.css";
@@ -15,6 +15,14 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: 'swap',
+});
+
+// Editorial display face for cinematic headlines. High-contrast, optical-sized.
+const display = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mockoffer.live';
@@ -71,7 +79,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${sans.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+          className={`${sans.variable} ${jetbrainsMono.variable} ${display.variable} font-sans antialiased`}
         >
           <LoadingProvider>
             {children}

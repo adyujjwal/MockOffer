@@ -125,36 +125,29 @@ export default function InterviewPage() {
   };
 
   const handleLanguageChange = (newLanguage: string) => {
-    // Prefer a saved draft for the target language.
-    const draft = currentProblem ? readDraft(currentProblem.id, newLanguage) : null;
+    if (newLanguage === language) return;
 
-    const currentLangOption = languageOptions.find((l) => l.value === language);
-
-    // Check if code is essentially empty/default (just template or very minimal)
-    const isCodeDefault = !code ||
-      code === currentLangOption?.defaultCode ||
-      code === currentProblem?.defaultCode ||
-      (currentProblem?.languageTemplates && code === currentProblem.languageTemplates[language]) ||
-      code.trim().length < 50;
-
-    setLanguage(newLanguage);
-
-    if (draft != null) {
-      setCode(draft);
-      return;
-    }
-
-    // If user hasn't written significant code, switch to new language template
-    if (isCodeDefault) {
-      if (currentProblem?.languageTemplates && currentProblem.languageTemplates[newLanguage]) {
-        setCode(currentProblem.languageTemplates[newLanguage]);
-      } else {
-        const langOption = languageOptions.find((l) => l.value === newLanguage);
-        if (langOption) {
-          setCode(langOption.defaultCode);
-        }
+    // Persist the current language's work to its own draft before switching,
+    // so nothing is lost even if the debounced autosave hasn't fired yet.
+    if (currentProblem) {
+      try {
+        localStorage.setItem(draftKey(currentProblem.id, language), code);
+      } catch {
+        /* ignore */
       }
     }
+
+    // Load the target language independently: a saved draft if one exists,
+    // otherwise that language's starter template.
+    const draft = currentProblem ? readDraft(currentProblem.id, newLanguage) : null;
+    const template =
+      (currentProblem?.languageTemplates && currentProblem.languageTemplates[newLanguage]) ||
+      languageOptions.find((l) => l.value === newLanguage)?.defaultCode ||
+      currentProblem?.defaultCode ||
+      '';
+
+    setLanguage(newLanguage);
+    setCode(draft ?? template);
   };
 
   // Load editor preferences once.
@@ -651,7 +644,7 @@ Please try again or check your internet connection.
       {/* Top bar */}
       <header className="sticky top-0 z-40">
         <div className="glass border-b">
-          <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-3 px-4 sm:px-6">
+          <div className="mx-auto flex h-16 w-full items-center justify-between gap-3 px-6 lg:px-12">
             <div className="flex min-w-0 items-center gap-2 sm:gap-4">
               <Link href="/dashboard" className="btn btn-ghost btn-sm -ml-2" aria-label="Back to dashboard">
                 <ArrowLeft size={16} />
@@ -726,7 +719,7 @@ Please try again or check your internet connection.
       </header>
 
       {/* Workspace */}
-      <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-4 sm:px-6 sm:py-5">
+      <main className="w-full flex-1 px-6 py-4 sm:py-5 lg:px-12">
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] xl:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
           {/* ── AI interviewer ── */}
           <aside className="xl:sticky xl:top-20 xl:self-start">

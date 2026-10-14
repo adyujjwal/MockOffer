@@ -77,35 +77,6 @@ const Radar: React.FC = () => {
   );
 };
 
-/* ── Sparkline timeline for Interview history ── */
-const HistorySparkline: React.FC = () => {
-  const w = 100;
-  const h = 34;
-  const pts = HISTORY.map((row, i) => {
-    const x = (i / (HISTORY.length - 1)) * w;
-    const y = h - (row.s / 100) * h;
-    return [x, y];
-  });
-  const d = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-  const len = 160;
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-9 w-full overflow-visible">
-      <path
-        d={d}
-        fill="none"
-        stroke="var(--color-gold)"
-        strokeWidth={1.5}
-        vectorEffect="non-scaling-stroke"
-        className="draw-path"
-        style={{ ["--len" as string]: len }}
-      />
-      {pts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={2} fill="var(--color-gold-bright)" vectorEffect="non-scaling-stroke" />
-      ))}
-    </svg>
-  );
-};
-
 const SectionHead: React.FC<{ index: string; eyebrow: string; title: string; body?: string }> = ({
   index,
   eyebrow,
@@ -113,19 +84,19 @@ const SectionHead: React.FC<{ index: string; eyebrow: string; title: string; bod
   body,
 }) => (
   <Reveal className="mx-auto max-w-2xl text-center">
-    <div className="mb-4 flex items-center justify-center gap-3">
-      <span className="mono text-xs text-[color:var(--color-fg-faint)]">{index}</span>
-      <span className="h-px w-8" style={{ background: "var(--color-line-strong)" }} />
+    <div className="mb-5 flex items-center justify-center gap-3">
+      <span className="mono text-xs text-iris">{index}</span>
+      <span className="h-px w-10 rule-iris" />
       <span className="eyebrow">{eyebrow}</span>
     </div>
-    <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h2>
-    {body && <p className="mt-4 text-lg text-[color:var(--color-fg-muted)]">{body}</p>}
+    <h2 className="font-display display-section text-balance">{title}</h2>
+    {body && <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[color:var(--color-fg-muted)]">{body}</p>}
   </Reveal>
 );
 
 export const FeatureSection: React.FC = () => {
   return (
-    <section id="features" className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:py-32">
+    <section id="features" className="relative w-full px-6 py-24 sm:py-32 lg:px-12">
       <SectionHead
         index="/ 01"
         eyebrow="The system"
@@ -285,13 +256,9 @@ export const FeatureSection: React.FC = () => {
               <h3 className="text-xl font-semibold">Interview history</h3>
             </div>
             <p className="text-sm text-[color:var(--color-fg-muted)]">
-              Every session is saved with its code, feedback and timing, so you can watch your
-              trend line move.
+              Every session is saved with its code, feedback and timing, so you can review your
+              progress over time.
             </p>
-
-            <div className="mt-5">
-              <HistorySparkline />
-            </div>
 
             <div className="mt-4 space-y-2">
               {HISTORY.map((row) => (

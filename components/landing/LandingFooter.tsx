@@ -4,7 +4,7 @@ import { MockOfferLogo } from "../MockOfferLogo";
 export const LandingFooter: React.FC = () => {
   return (
     <footer className="relative border-t" style={{ borderColor: "var(--color-line)" }}>
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-12 sm:flex-row sm:items-center">
+      <div className="flex w-full flex-col items-start justify-between gap-6 px-6 py-12 sm:flex-row sm:items-center lg:px-12">
         <div>
           <MockOfferLogo size={26} />
           <p className="mt-3 max-w-xs text-sm text-[color:var(--color-fg-subtle)]">
@@ -17,8 +17,8 @@ export const LandingFooter: React.FC = () => {
           <a href="#features" className="transition-colors hover:text-[color:var(--color-fg)]">Features</a>
         </div>
       </div>
-      <div className="border-t px-5 py-5" style={{ borderColor: "var(--color-line)" }}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between text-xs text-[color:var(--color-fg-faint)]">
+      <div className="border-t px-6 py-5 lg:px-12" style={{ borderColor: "var(--color-line)" }}>
+        <div className="flex w-full items-center justify-between text-xs text-[color:var(--color-fg-faint)]">
           <span>© {new Date().getFullYear()} MockOffer</span>
           <span className="mono">mockoffer.live</span>
         </div>

@@ -24,26 +24,39 @@ export const AppBackground: React.FC<{ variant?: "landing" | "app" }> = ({
         }}
       />
 
-      {/* gold aurora */}
+      {/* gold aurora (slow drift) */}
       <div
-        className="absolute left-1/2 h-[42rem] w-[62rem] -translate-x-1/2"
+        className="aurora-gold absolute left-1/2 h-[42rem] w-[62rem] -translate-x-1/2"
         style={{
           top: variant === "landing" ? "-14rem" : "-24rem",
           background:
-            "radial-gradient(ellipse at center, rgba(230,178,74,0.10), transparent 60%)",
+            "radial-gradient(ellipse at center, rgba(230,178,74,0.12), transparent 60%)",
           filter: "blur(20px)",
         }}
       />
 
-      {/* cool counter-bloom, very restrained */}
+      {/* cool counter-bloom, very restrained (drifts opposite) */}
       <div
-        className="absolute right-[-10rem] top-[20%] h-[34rem] w-[34rem]"
+        className="aurora-iris absolute right-[-10rem] top-[18%] h-[34rem] w-[34rem]"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(138,162,255,0.055), transparent 62%)",
+            "radial-gradient(circle at center, rgba(138,162,255,0.06), transparent 62%)",
           filter: "blur(30px)",
         }}
       />
+
+      {/* low warm accent that rises from the lower-left on landing */}
+      {variant === "landing" && (
+        <div
+          className="aurora-iris absolute bottom-[6%] left-[-8rem] h-[30rem] w-[30rem]"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(230,178,74,0.05), transparent 64%)",
+            filter: "blur(34px)",
+            animationDelay: "-8s",
+          }}
+        />
+      )}
 
       {/* bottom vignette */}
       <div

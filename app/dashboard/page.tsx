@@ -81,7 +81,7 @@ export default function Dashboard() {
       <AppBackground />
       <AppNav />
 
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
+      <main className="w-full px-6 py-10 sm:py-14 lg:px-12">
         {/* Header */}
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>

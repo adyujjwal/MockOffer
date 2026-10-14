@@ -27,14 +27,14 @@ const STEPS = [
 
 export const HowItWorks: React.FC = () => {
   return (
-    <section id="how-it-works" className="relative mx-auto w-full max-w-6xl overflow-hidden px-5 py-24 sm:py-32">
+    <section id="how-it-works" className="relative w-full overflow-hidden px-6 py-24 sm:py-32 lg:px-12">
       <Reveal className="max-w-2xl">
-        <div className="mb-4 flex items-center gap-3">
-          <span className="mono text-xs text-[color:var(--color-fg-faint)]">/ 03</span>
-          <span className="h-px w-8" style={{ background: "var(--color-line-strong)" }} />
+        <div className="mb-5 flex items-center gap-3">
+          <span className="mono text-xs text-iris">/ 03</span>
+          <span className="h-px w-10 rule-iris" />
           <span className="eyebrow">How it works</span>
         </div>
-        <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h2 className="font-display display-section text-balance">
           Three steps from cold start to clear feedback.
         </h2>
       </Reveal>
@@ -49,7 +49,7 @@ export const HowItWorks: React.FC = () => {
               y1="1"
               x2="1000"
               y2="1"
-              stroke="var(--color-gold)"
+              stroke="var(--color-iris)"
               strokeWidth="2"
               className="draw-path"
               style={{ ["--len" as string]: 1000 }}
@@ -64,10 +64,10 @@ export const HowItWorks: React.FC = () => {
                 {/* node dot on the line */}
                 <span
                   className="absolute -top-[0.3rem] left-7 hidden h-2.5 w-2.5 rounded-full md:block"
-                  style={{ background: "var(--color-gold)", boxShadow: "0 0 0 4px var(--color-ink)" }}
+                  style={{ background: "var(--color-iris-bright)", boxShadow: "0 0 0 4px var(--color-ink), 0 0 10px rgba(138,162,255,0.7)" }}
                 />
                 <div className="mb-6 flex items-center justify-between">
-                  <span className="index-numeral text-5xl font-semibold">{s.n}</span>
+                  <span className="index-iris font-display text-6xl">{s.n}</span>
                   <span
                     className="flex h-11 w-11 items-center justify-center rounded-xl"
                     style={{ background: "rgba(230,178,74,0.1)", color: "var(--color-gold-bright)" }}

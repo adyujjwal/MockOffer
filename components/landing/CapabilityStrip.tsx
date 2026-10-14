@@ -15,7 +15,7 @@ const CAPABILITIES = [
 
 export const CapabilityStrip: React.FC = () => {
   return (
-    <section className="relative mx-auto w-full max-w-6xl px-5 pb-10 pt-4">
+    <section className="relative w-full px-6 pb-10 pt-4 lg:px-12">
       <Reveal className="flex items-center gap-4">
         <span className="tech whitespace-nowrap">Built for serious software engineers.</span>
         <span className="h-px flex-1" style={{ background: "var(--color-line)" }} />
@@ -33,7 +33,7 @@ export const CapabilityStrip: React.FC = () => {
             style={{ background: "var(--color-panel)" }}
           >
             <div className="flex items-center justify-between">
-              <span className="mono text-xs text-[color:var(--color-fg-faint)]">{n}</span>
+              <span className="mono text-xs text-iris">{n}</span>
               <Icon size={16} className="text-[color:var(--color-fg-subtle)] transition-colors group-hover:text-[color:var(--color-gold-bright)]" />
             </div>
             <span className="text-sm font-medium leading-snug text-[color:var(--color-fg)]">

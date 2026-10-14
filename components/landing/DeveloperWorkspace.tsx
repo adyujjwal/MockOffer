@@ -127,17 +127,17 @@ export const DeveloperWorkspace: React.FC = () => {
   const activeTool = TOOLS.find((t) => t.key === active)!;
 
   return (
-    <section className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:py-32">
+    <section className="relative w-full px-6 py-24 sm:py-32 lg:px-12">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <div className="mb-4 flex items-center justify-center gap-3">
-          <span className="mono text-xs text-[color:var(--color-fg-faint)]">/ 02</span>
-          <span className="h-px w-8" style={{ background: "var(--color-line-strong)" }} />
+        <div className="mb-5 flex items-center justify-center gap-3">
+          <span className="mono text-xs text-iris">/ 02</span>
+          <span className="h-px w-10 rule-iris" />
           <span className="eyebrow">Built for developers</span>
         </div>
-        <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h2 className="font-display display-section text-balance">
           A workspace that works the way you do.
         </h2>
-        <p className="mt-4 text-lg text-[color:var(--color-fg-muted)]">
+        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[color:var(--color-fg-muted)]">
           The little things that make practice feel like real work, not a quiz box.
         </p>
       </Reveal>
@@ -175,7 +175,7 @@ export const DeveloperWorkspace: React.FC = () => {
                   >
                     <t.Icon size={18} />
                   </span>
-                  <span className="mono text-xs text-[color:var(--color-fg-faint)]">{t.n}</span>
+                  <span className="mono text-xs text-iris">{t.n}</span>
                   <h3 className="text-base font-semibold">{t.title}</h3>
                 </div>
                 <div
@@ -196,8 +196,8 @@ export const DeveloperWorkspace: React.FC = () => {
         </Reveal>
 
         {/* central editor whose panel reflects the active capability */}
-        <Reveal delay={80} className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-          <div className="card overflow-hidden">
+        <Reveal delay={80} className="min-w-0 h-full">
+          <div className="card flex h-full flex-col overflow-hidden">
             <div className="flex items-center gap-2 border-b px-3 py-2.5" style={{ borderColor: "var(--color-line)" }}>
               <Braces size={13} className="text-[color:var(--color-gold-bright)]" />
               <span className="mono text-[11px] text-[color:var(--color-fg-muted)]">solution.ts</span>
@@ -207,7 +207,7 @@ export const DeveloperWorkspace: React.FC = () => {
               </span>
             </div>
 
-            <div className="overflow-x-auto px-3 py-4 font-mono text-[12.5px]" style={{ background: "var(--color-inset)" }}>
+            <div className="flex-1 overflow-x-auto px-3 py-4 font-mono text-[12.5px]" style={{ background: "var(--color-inset)" }}>
               {[
                 [["#c99bff", "function"], ["#8aa2ff", " twoSum"], ["#8b8f99", "(nums, target) {"]],
                 [["#8b8f99", "  "], ["#c99bff", "const"], ["#f5f5f6", " seen"], ["#8b8f99", " = "], ["#c99bff", "new"], ["#8aa2ff", " Map"], ["#8b8f99", "();"]],
